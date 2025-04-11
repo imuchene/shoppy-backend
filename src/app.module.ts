@@ -13,15 +13,17 @@ import { LoggerModule } from 'nestjs-pino';
         const isProduction = configService.get('NODE_ENV') === 'production';
         return {
           pinoHttp: {
-            transport: isProduction ? undefined : { target: 'pino-pretty', options: { singleLine: true }},
-            level: isProduction ? 'info' : 'debug'
-          }
-        }
+            transport: isProduction
+              ? undefined
+              : { target: 'pino-pretty', options: { singleLine: true } },
+            level: isProduction ? 'info' : 'debug',
+          },
+        };
       },
       imports: [ConfigModule],
-      inject: [ConfigService]
+      inject: [ConfigService],
     }),
-    UsersModule
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
