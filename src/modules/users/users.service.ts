@@ -30,4 +30,8 @@ export class UsersService {
       throw error;
     }
   }
+
+  async getUser(filter: Prisma.UserWhereUniqueInput) {
+    return this.prismaService.user.findUniqueOrThrow({ where: filter });
+  }
 }
