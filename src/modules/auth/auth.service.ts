@@ -3,7 +3,8 @@ import { UsersService } from '../users/users.service';
 import * as bcrypt from 'bcrypt';
 import { Response } from 'express';
 import { User } from 'generated/prisma';
-import ms, { StringValue } from 'ms';
+import { StringValue } from 'ms';
+import * as ms from 'ms';
 import { ConfigService } from '@nestjs/config';
 import { TokenPayload } from './interfaces/token-payload.interface';
 import { JwtService } from '@nestjs/jwt';
@@ -47,6 +48,7 @@ export class AuthService {
 
     response.cookie(CookieNames.Authentication, token, {
       secure: true,
+      signed: true,
       httpOnly: true,
       expires,
     });
