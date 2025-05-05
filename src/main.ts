@@ -8,6 +8,10 @@ import { ConfigService } from '@nestjs/config';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
+  app.enableCors({
+    origin: [configService.getOrThrow<string>('FRONTEND_URL')],
+    credentials: true,
+  });
   app.useLogger(app.get(Logger));
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   app.use(cookieParser(configService.getOrThrow<string>('COOKIE_SECRET')));

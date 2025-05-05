@@ -48,7 +48,8 @@ export class AuthService {
 
     response.cookie(CookieNames.Authentication, token, {
       secure: true,
-      signed: true,
+      signed: false,
+      sameSite: 'lax',
       httpOnly: true,
       expires,
     });
