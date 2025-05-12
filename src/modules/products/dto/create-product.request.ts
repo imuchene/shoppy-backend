@@ -1,4 +1,5 @@
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsNotEmpty, IsNumber, IsPositive, IsString } from 'class-validator';
 
 export class CreateProductRequest {
   @IsString()
@@ -9,6 +10,8 @@ export class CreateProductRequest {
   @IsNotEmpty()
   description: string;
 
-  @IsNumber()
+  @IsNumber({ maxDecimalPlaces: 2 })
+  @IsPositive()
+  @Type(() => Number)
   price: number;
 }
