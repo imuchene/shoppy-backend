@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Body,
   Controller,
@@ -57,13 +58,14 @@ export class ProductsController {
     @UploadedFile(
       new ParseFilePipe({
         validators: [
-          new MaxFileSizeValidator({ maxSize: 5000000 }),
-          new FileTypeValidator({ fileType: 'image/jpeg' }),
+          new MaxFileSizeValidator({ maxSize: 5 * 1024 * 1024 }),
+          new FileTypeValidator({
+            fileType: '.(png|jpeg|jpg|webp)',
+            skipMagicNumbersValidation: true,
+          }),
         ],
       }),
     )
-    _file: Express.Multer.File,
-  ) {
-    console.log('file', _file);
-  }
+    file: Express.Multer.File,
+  ) {}
 }
