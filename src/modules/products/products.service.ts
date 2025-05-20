@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateProductRequest } from './dto/create-product.request';
 import { PrismaService } from '../prisma/prisma.service';
 import { promises as fs } from 'fs';
 import { join } from 'path';
+import { PRODUCT_IMAGES } from './product-images';
 
 @Injectable()
 export class ProductsService {
@@ -27,10 +28,24 @@ export class ProductsService {
     );
   }
 
+  async getProduct(productId: string) {
+    try {
+      const product = await this.prismaService.product.findUniqueOrThrow({
+        where: { id: productId },
+      });
+      const imageExists = await this.imageExists(productId);
+      return { ...product, imageExists };
+      //eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (error) {
+      throw new NotFoundException(`Product not found with ID ${productId}`);
+    }
+  }
+
   private async imageExists(productId: string) {
     try {
+      // todo enhance this method to support multiple image file types - png, webp etc via regex?
       await fs.access(
-        join(__dirname, '../../../', `public/products/${productId}.jpeg`),
+        join(`${PRODUCT_IMAGES}/${productId}.jpeg`),
         fs.constants.F_OK,
       );
       return true;
