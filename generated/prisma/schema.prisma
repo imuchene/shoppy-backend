@@ -24,12 +24,13 @@ model User {
 }
 
 model Product {
-  id          String @id @unique @default(uuid()) @db.Uuid
+  id          String  @id @unique @default(uuid()) @db.Uuid
   name        String
   description String
   price       Float
-  user        User   @relation(fields: [userId], references: [id])
-  userId      String @db.Uuid
+  user        User    @relation(fields: [userId], references: [id])
+  userId      String  @db.Uuid
+  sold        Boolean @default(false)
 
   @@map("products")
 }
