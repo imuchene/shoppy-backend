@@ -23,7 +23,7 @@ export class ProductsService {
     const args: Prisma.ProductFindManyArgs = {};
 
     if (status === 'available') {
-      args.where = { sold: true };
+      args.where = { sold: false };
     }
 
     const products = await this.prismaService.product.findMany(args);
