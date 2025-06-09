@@ -9,6 +9,7 @@ import { ConfigService } from '@nestjs/config';
 import { TokenPayload } from './interfaces/token-payload.interface';
 import { JwtService } from '@nestjs/jwt';
 import { CookieNames } from '../../common/enums/cookie-names.enum';
+import * as fs from 'fs';
 
 @Injectable()
 export class AuthService {
@@ -55,5 +56,15 @@ export class AuthService {
     });
 
     return { tokenPayload };
+  }
+
+  verifyToken(jwt: string) {
+    this.jwtService.verify(jwt, {
+      publicKey: fs
+        .readFileSync(
+          this.configService.getOrThrow('JWT_ACCESS_TOKEN_PUBLIC_KEY'),
+        )
+        .toString(),
+    });
   }
 }
