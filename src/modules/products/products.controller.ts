@@ -51,7 +51,7 @@ export class ProductsController {
         filename: (req, file, callback) => {
           callback(
             null,
-            `${req.params.productId}${extname(file.originalname)}`,
+            `${String(req.params.productId)}${String(extname(file.originalname))}`,
           );
         },
       }),

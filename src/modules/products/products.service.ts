@@ -4,7 +4,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import { promises as fs } from 'fs';
 import { join } from 'path';
 import { PRODUCT_IMAGES } from './product-images';
-import { Prisma } from 'generated/prisma';
+import { Prisma } from 'generated/prisma/client';
 import { ProductsGateway } from './products.gateway';
 
 @Injectable()

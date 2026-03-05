@@ -15,10 +15,8 @@ export class WsAuthGuard implements CanActivate {
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     const client: Socket = context.switchToWs().getClient();
+    this.logger.log('ws-client', client);
 
-    const test = client;
-
-    this.logger.log('test', test);
     return true;
   }
 }
